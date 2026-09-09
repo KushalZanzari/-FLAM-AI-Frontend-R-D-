@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base Resets ─────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    @apply antialiased;
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-surface-900 text-slate-100 font-sans;
+    background: radial-gradient(ellipse at top left, #111827 0%, #0a0e1a 60%);
+    min-height: 100vh;
+  }
+
+  /* Light mode overrides */
+  html.light body {
+    @apply bg-slate-50 text-slate-900;
+    background: radial-gradient(ellipse at top left, #eff6ff 0%, #f8fafc 60%);
+    color-scheme: light;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-800;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-surface-500 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-accent-600;
+  }
+
+  html.light ::-webkit-scrollbar-track {
+    @apply bg-slate-200;
+  }
+  html.light ::-webkit-scrollbar-thumb {
+    @apply bg-slate-400;
+  }
+}
+
+/* ── Component Utilities ─────────────────────────────────────────────────── */
+@layer components {
+  /* Glass card */
+  .card {
+    @apply rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm shadow-card;
+  }
+
+  html.light .card {
+    @apply border-slate-200 bg-white shadow-md backdrop-blur-none;
+  }
+
+  /* Chart container */
+  .chart-container {
+    @apply card p-4;
+  }
+
+  /* Stat card */
+  .stat-card {
+    @apply card p-5 flex flex-col gap-2;
+  }
+
+  /* Filter chip / badge */
+  .chip {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium
+           bg-accent-600/20 text-accent-400 border border-accent-600/30;
+  }
+
+  /* Button variants */
+  .btn-primary {
+    @apply px-4 py-2 rounded-lg bg-accent-600 hover:bg-accent-500 text-white
+           font-medium text-sm transition-all duration-200 hover:shadow-glow
+           active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300
+           hover:text-white text-sm transition-all duration-200 border border-white/10
+           active:scale-95;
+  }
+
+  html.light .btn-ghost {
+    @apply bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border-slate-200;
+  }
+
+  /* Section heading */
+  .section-title {
+    @apply text-sm font-semibold text-slate-400 uppercase tracking-wider;
+  }
+
+  html.light .section-title {
+    @apply text-slate-500;
+  }
+
+  /* uPlot container */
+  .uplot-wrap {
+    @apply w-full;
+  }
+
+  .uplot-wrap .u-wrap {
+    width: 100% !important;
+  }
+
+  /* Loading shimmer */
+  .shimmer {
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  html.light .shimmer {
+    background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.04) 50%, transparent 100%);
+    background-size: 200% 100%;
+  }
+
+  /* Table row */
+  .table-row-hover {
+    @apply transition-colors duration-100 hover:bg-white/5 cursor-default;
+  }
+
+  html.light .table-row-hover {
+    @apply hover:bg-slate-50;
+  }
+
+  /* Perf indicator */
+  .perf-hud {
+    @apply fixed bottom-4 right-4 z-50 flex items-center gap-3
+           px-4 py-2.5 rounded-xl
+           bg-surface-800/90 backdrop-blur-md border border-white/10
+           text-xs font-mono shadow-card;
+  }
+
+  html.light .perf-hud {
+    @apply bg-white/90 border-slate-200 text-slate-700 shadow-lg;
+  }
+
+  /* Checkbox custom */
+  input[type="checkbox"] {
+    @apply accent-accent-500 w-4 h-4 rounded cursor-pointer;
+  }
+
+  /* Date input */
+  input[type="date"] {
+    @apply bg-surface-700 border border-white/10 rounded-lg px-3 py-2 text-sm
+           text-slate-200 w-full focus:outline-none focus:border-accent-500
+           focus:ring-1 focus:ring-accent-500/30 transition-all;
+    color-scheme: dark;
+  }
+
+  html.light input[type="date"] {
+    @apply bg-white border-slate-300 text-slate-800;
+    color-scheme: light;
+  }
+
+  /* Text input */
+  input[type="text"] {
+    @apply bg-surface-700 border border-white/10 rounded-lg px-3 py-2.5 text-sm
+           text-slate-200 w-full focus:outline-none focus:border-accent-500
+           focus:ring-1 focus:ring-accent-500/30 transition-all
+           placeholder:text-slate-500;
+  }
+
+  html.light input[type="text"] {
+    @apply bg-white border-slate-300 text-slate-800 placeholder:text-slate-400;
+  }
+}
+
+/* ── uPlot Theme Overrides ───────────────────────────────────────────────── */
+.u-legend {
+  font-family: "Inter", system-ui, sans-serif !important;
+  font-size: 11px !important;
+  color: #94a3b8 !important;
+  padding: 4px 0 !important;
+}
+
+.u-legend th {
+  color: #94a3b8 !important;
+}
+
+html.light .u-legend,
+html.light .u-legend th {
+  color: #475569 !important;
+}
+
+/* ── Custom Animations ───────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.count-animate {
+  animation: countUp 0.4s ease-out;
+}
