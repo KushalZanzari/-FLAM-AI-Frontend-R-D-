@@ -9,52 +9,60 @@ export default {
         mono: ["JetBrains Mono", "Fira Code", "monospace"],
       },
       colors: {
-        // Dark mode base
+        // Dark mode base palette — warm obsidian & charcoal
         surface: {
-          900: "#0a0e1a",
-          800: "#0f1629",
-          700: "#141c35",
-          600: "#1a2340",
-          500: "#1e2a4a",
-          400: "#243055",
+          950: "#0c0c0e",
+          900: "#121215",
+          800: "#18181c",
+          700: "#222228",
+          600: "#2d2d34",
+          500: "#3d3d46",
+          400: "#52525c",
         },
-        // Accent palette — indigo/violet
+        // Primary accent — rich amber & bronze
         accent: {
-          400: "#818cf8",
-          500: "#6366f1",
-          600: "#4f46e5",
-          700: "#4338ca",
+          50: "#fffbeb",
+          100: "#fef3c7",
+          200: "#fde68a",
+          300: "#fcd34d",
+          400: "#fbbf24",
+          500: "#f59e0b",
+          600: "#d97706",
+          700: "#b45309",
+          800: "#92400e",
+          900: "#78350f",
         },
-        // Secondary — cyan/teal
+        // Secondary — warm terracotta / burnt orange
         secondary: {
-          400: "#22d3ee",
-          500: "#06b6d4",
+          400: "#fb923c",
+          500: "#f97316",
+          600: "#ea580c",
         },
-        // Success/revenue — emerald
+        // Success/revenue — crisp forest emerald
         emerald: {
           400: "#34d399",
           500: "#10b981",
+          600: "#059669",
         },
-        // Warning — amber
-        amber: {
-          400: "#fbbf24",
-          500: "#f59e0b",
+        // Earthy stone neutral
+        stone: {
+          850: "#1f1d1b",
+          900: "#1c1917",
+          950: "#0c0a09",
         },
-        // Charts
+        // Categorical chart palette
         chart: {
-          blue: "#818cf8",
-          purple: "#a78bfa",
-          cyan: "#22d3ee",
-          emerald: "#34d399",
-          amber: "#fbbf24",
-          rose: "#fb7185",
+          amber: "#f59e0b",
+          terracotta: "#ea580c",
+          emerald: "#10b981",
+          coral: "#f43f5e",
+          sage: "#84cc16",
+          bronze: "#b45309",
         },
       },
       animation: {
-        "fade-in": "fadeIn 0.3s ease-out",
-        "slide-up": "slideUp 0.3s ease-out",
-        "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        shimmer: "shimmer 1.5s infinite",
+        "fade-in": "fadeIn 0.25s ease-out",
+        "slide-up": "slideUp 0.25s ease-out",
       },
       keyframes: {
         fadeIn: {
@@ -62,23 +70,14 @@ export default {
           "100%": { opacity: "1" },
         },
         slideUp: {
-          "0%": { opacity: "0", transform: "translateY(8px)" },
+          "0%": { opacity: "0", transform: "translateY(4px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        shimmer: {
-          "0%": { backgroundPosition: "-200% 0" },
-          "100%": { backgroundPosition: "200% 0" },
-        },
-      },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "shimmer-gradient":
-          "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%)",
       },
       boxShadow: {
-        glow: "0 0 20px rgba(99, 102, 241, 0.3)",
-        "glow-sm": "0 0 10px rgba(99, 102, 241, 0.2)",
-        card: "0 4px 24px rgba(0, 0, 0, 0.4)",
+        subtle: "0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.3)",
+        card: "0 2px 8px -2px rgba(0, 0, 0, 0.4), 0 1px 3px 0 rgba(0, 0, 0, 0.2)",
+        lifted: "0 8px 24px -4px rgba(0, 0, 0, 0.5)",
       },
     },
   },
