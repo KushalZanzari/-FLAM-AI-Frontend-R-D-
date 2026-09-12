@@ -1,5 +1,5 @@
 """
-Synthetic Retail Sales Data Generator
+Retail Sales Benchmark Data Generator
 Produces 300,000 rows of realistic retail transaction data.
 Output: data/sales_data.csv (~22MB) and public/sales_data.csv (served statically)
 """
