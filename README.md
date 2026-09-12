@@ -1,7 +1,5 @@
 # RetailScope — High-Performance Analytics Dashboard
 
-> **Live Demo**: [https://retailscope-dashboard.vercel.app](https://retailscope-dashboard.vercel.app)
-> **GitHub**: [https://github.com/your-username/data-viz-dashboard](https://github.com/your-username/data-viz-dashboard)
 
 ![RetailScope Dashboard Preview](public/screenshot.png)
 
