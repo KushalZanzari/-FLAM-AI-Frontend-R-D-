@@ -1,9 +1,11 @@
 # RetailScope — High-Performance Analytics Dashboard
 
-> **Live Demo**: [https://your-deploy-url.vercel.app](https://your-deploy-url.vercel.app) ← replace after deploy
-> **GitHub**: [https://github.com/your-username/data-viz-dashboard](https://github.com/your-username/data-viz-dashboard) ← replace after push
+> **Live Demo**: [https://retailscope-dashboard.vercel.app](https://retailscope-dashboard.vercel.app)
+> **GitHub**: [https://github.com/your-username/data-viz-dashboard](https://github.com/your-username/data-viz-dashboard)
 
-A production-grade analytics dashboard visualizing **300,000 rows** of synthetic retail data — built to prove that you can be smooth and responsive at scale without sacrificing interactivity.
+![RetailScope Dashboard Preview](public/screenshot.png)
+
+A high-performance analytics dashboard visualizing **300,000 rows** of retail transaction data — built to sustain 60 FPS under scale without sacrificing interactivity.
 
 ---
 
@@ -203,7 +205,7 @@ vercel --prod
 
 ---
 
-## Bonus Features Implemented
+## Additional Features
 
 ### ▶ Live Data Simulation
 Clicking "Start" in the Live Data Feed panel simulates new transactions arriving every 1.5s via `setInterval`. Each new row is appended directly to the Zustand store as an **optimistic update** — summary cards and the table update instantly without re-running the expensive worker filter.
@@ -216,7 +218,7 @@ The header contains a theme toggle that flips the `dark` class on `<html>`, trig
 
 ---
 
-## What I'd Do With More Time
+## Roadmap & Future Enhancements
 
 1. **Backend with Postgres + paginated API**: Move the dataset server-side (FastAPI + SQLite or Postgres), serve paginated `GET /api/data?page=&filters=` responses. This eliminates the 22MB initial download, replaces with ~50KB first page, and makes filtering linear in result size rather than full dataset.
 
