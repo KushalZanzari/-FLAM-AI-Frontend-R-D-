@@ -20,7 +20,7 @@ const COLUMN_DEFS: ColDef[] = [
     header: "ID",
     size: 70,
     cell: (info) => (
-      <span className="text-slate-500 font-mono text-xs">
+      <span className="text-stone-500 font-mono text-xs">
         #{info.getValue() as number}
       </span>
     ),
@@ -30,7 +30,7 @@ const COLUMN_DEFS: ColDef[] = [
     header: "Date",
     size: 110,
     cell: (info) => (
-      <span className="text-slate-300 font-mono text-xs">
+      <span className="text-stone-300 font-mono text-xs">
         {info.getValue() as string}
       </span>
     ),
@@ -40,7 +40,7 @@ const COLUMN_DEFS: ColDef[] = [
     header: "Region",
     size: 160,
     cell: (info) => (
-      <span className="text-slate-200 text-xs">{info.getValue() as string}</span>
+      <span className="text-stone-200 text-xs">{info.getValue() as string}</span>
     ),
   },
   {
@@ -56,7 +56,7 @@ const COLUMN_DEFS: ColDef[] = [
     header: "Product",
     size: 200,
     cell: (info) => (
-      <span className="text-slate-200 text-xs">{info.getValue() as string}</span>
+      <span className="text-stone-200 text-xs font-medium">{info.getValue() as string}</span>
     ),
   },
   {
@@ -66,7 +66,7 @@ const COLUMN_DEFS: ColDef[] = [
     cell: (info) => {
       const val = info.getValue() as number;
       return (
-        <span className="text-emerald-400 font-semibold font-mono text-xs">
+        <span className="text-emerald-400 font-medium font-mono text-xs">
           $
           {val.toLocaleString("en-US", {
             minimumFractionDigits: 2,
@@ -81,7 +81,7 @@ const COLUMN_DEFS: ColDef[] = [
     header: "Units",
     size: 80,
     cell: (info) => (
-      <span className="text-slate-300 font-mono text-xs">
+      <span className="text-stone-300 font-mono text-xs">
         {info.getValue() as number}
       </span>
     ),
@@ -94,12 +94,12 @@ const COLUMN_DEFS: ColDef[] = [
       const val = info.getValue() as string;
       const colors: Record<string, string> = {
         Consumer: "text-accent-400",
-        Corporate: "text-secondary-400",
-        "Home Office": "text-amber-400",
+        Corporate: "text-stone-300",
+        "Home Office": "text-secondary-400",
         "Small Business": "text-emerald-400",
       };
       return (
-        <span className={`text-xs font-medium ${colors[val] ?? "text-slate-400"}`}>
+        <span className={`text-xs font-medium ${colors[val] ?? "text-stone-400"}`}>
           {val}
         </span>
       );
@@ -174,20 +174,20 @@ export const DataTable = memo(function DataTable() {
   return (
     <div className="card overflow-hidden">
       {/* Header */}
-      <div className="px-5 py-4 border-b border-white/5 flex items-center justify-between">
+      <div className="px-5 py-4 border-b border-stone-200 dark:border-surface-700/80 flex items-center justify-between">
         <div>
-          <h3 className="font-semibold text-slate-200 text-sm">
-            Transaction Data
+          <h3 className="font-medium text-stone-900 dark:text-stone-200 text-sm">
+            Transaction Ledger
           </h3>
-          <p className="text-xs text-slate-500 mt-0.5">
-            <span className="text-accent-400 font-medium">
+          <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
+            <span className="text-accent-600 dark:text-accent-400 font-medium">
               {filteredCount.toLocaleString()}
             </span>{" "}
-            rows · Virtualized (only ~20 DOM rows at any time) · Click headers to sort
+            rows · Virtualized (TanStack Virtual) · Click headers to sort
           </p>
         </div>
         {isLoading && (
-          <span className="text-xs text-amber-400 animate-pulse">Loading…</span>
+          <span className="text-xs text-accent-600 dark:text-accent-400 font-medium animate-pulse">Loading…</span>
         )}
       </div>
 
@@ -200,14 +200,14 @@ export const DataTable = memo(function DataTable() {
             ))}
           </colgroup>
           <thead>
-            <tr className="bg-surface-800 border-b border-white/10">
+            <tr className="bg-stone-100 dark:bg-surface-800 border-b border-stone-200 dark:border-surface-700">
               {COLUMN_DEFS.map((col) => (
                 <th
                   key={col.accessorKey}
-                  className="px-3 py-2.5 text-left"
+                  className="px-3 py-2 text-left"
                   onClick={() => handleSort(col.accessorKey)}
                 >
-                  <div className="flex items-center text-xs font-medium text-slate-400 hover:text-slate-200 transition-colors cursor-pointer select-none whitespace-nowrap">
+                  <div className="flex items-center text-xs font-medium text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200 transition-colors cursor-pointer select-none whitespace-nowrap">
                     {col.header}
                     <SortIcon
                       sorted={
@@ -224,7 +224,7 @@ export const DataTable = memo(function DataTable() {
         {/* Virtualized body */}
         <div ref={parentRef} className="overflow-auto" style={{ height: 400 }}>
           {sortedData.length === 0 && !isLoading ? (
-            <div className="flex items-center justify-center h-full text-slate-500 text-sm py-16">
+            <div className="flex items-center justify-center h-full text-stone-400 text-sm py-16">
               No data matches the current filters
             </div>
           ) : (
@@ -246,7 +246,7 @@ export const DataTable = memo(function DataTable() {
                     return (
                       <tr
                         key={row.id}
-                        className="table-row-hover border-b border-white/5"
+                        className="table-row-hover border-b border-stone-100 dark:border-surface-800/60"
                         style={{ height: ROW_HEIGHT }}
                       >
                         {COLUMN_DEFS.map((col) => (
@@ -273,11 +273,12 @@ export const DataTable = memo(function DataTable() {
       </div>
 
       {/* Footer */}
-      <div className="px-5 py-2.5 border-t border-white/5 text-xs text-slate-600">
-        Showing ~{Math.min(virtualRows.length, sortedData.length)} DOM rows of{" "}
-        {filteredCount.toLocaleString()} ·{" "}
-        <span className="text-accent-400">
-          Scroll to navigate all {filteredCount.toLocaleString()} rows
+      <div className="px-5 py-2.5 border-t border-stone-200 dark:border-surface-700/80 text-xs text-stone-500 flex items-center justify-between">
+        <span>
+          Showing ~{Math.min(virtualRows.length, sortedData.length)} DOM rows · Total {filteredCount.toLocaleString()} matches
+        </span>
+        <span className="text-stone-400 font-mono text-[11px]">
+          Virtual Window
         </span>
       </div>
     </div>

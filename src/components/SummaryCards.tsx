@@ -6,9 +6,8 @@ interface StatCardProps {
   title: string;
   value: string;
   subtitle?: string;
-  icon: string;
-  color: string;
-  gradient: string;
+  icon: React.ReactNode;
+  iconBg: string;
   loading?: boolean;
 }
 
@@ -17,8 +16,7 @@ const StatCard = memo(function StatCard({
   value,
   subtitle,
   icon,
-  color,
-  gradient,
+  iconBg,
   loading,
 }: StatCardProps) {
   const prevValueRef = useRef<string>("");
@@ -35,33 +33,30 @@ const StatCard = memo(function StatCard({
   }, [value]);
 
   return (
-    <div className="stat-card relative overflow-hidden group">
-      {/* Gradient glow background */}
-      <div
-        className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${gradient}`}
-        style={{ filter: "blur(40px)", zIndex: 0 }}
-      />
-      <div className="relative z-10">
-        <div className="flex items-center justify-between mb-3">
-          <span className="section-title">{title}</span>
-          <div
-            className={`w-9 h-9 rounded-xl flex items-center justify-center text-lg ${color}`}
-          >
-            {icon}
-          </div>
+    <div className="stat-card">
+      <div className="flex items-center justify-between">
+        <span className="section-title text-[11px] font-medium tracking-wider text-stone-500 dark:text-stone-400">
+          {title}
+        </span>
+        <div
+          className={`w-7 h-7 rounded-lg flex items-center justify-center ${iconBg}`}
+        >
+          {icon}
         </div>
+      </div>
+      <div>
         {loading ? (
-          <div className="h-9 w-32 rounded-lg bg-white/5 shimmer" />
+          <div className="h-8 w-28 rounded bg-stone-200 dark:bg-surface-700/50 shimmer" />
         ) : (
           <span
             ref={valueRef}
-            className="text-3xl font-bold tracking-tight text-slate-100 dark:text-slate-100 count-animate"
+            className="text-2xl font-semibold tracking-tight text-stone-900 dark:text-stone-100 font-mono tabular-nums count-animate"
           >
             {value}
           </span>
         )}
         {subtitle && !loading && (
-          <p className="text-xs text-slate-500 mt-1">{subtitle}</p>
+          <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-1">{subtitle}</p>
         )}
       </div>
     </div>
@@ -90,34 +85,46 @@ export const SummaryCards = memo(function SummaryCards() {
     {
       title: "Total Revenue",
       value: stats ? formatCurrency(stats.totalRevenue) : "—",
-      subtitle: "Across filtered transactions",
-      icon: "💰",
-      color: "bg-emerald-500/20 text-emerald-400",
-      gradient: "bg-gradient-to-br from-emerald-600/10 to-transparent",
+      subtitle: "Across filtered range",
+      icon: (
+        <svg className="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+      iconBg: "bg-emerald-500/10 border border-emerald-500/20",
     },
     {
       title: "Units Sold",
       value: stats ? formatNumber(stats.totalUnits) : "—",
-      subtitle: "Total items in filtered range",
-      icon: "📦",
-      color: "bg-accent-500/20 text-accent-400",
-      gradient: "bg-gradient-to-br from-accent-600/10 to-transparent",
+      subtitle: "Volume in filtered range",
+      icon: (
+        <svg className="w-3.5 h-3.5 text-accent-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+        </svg>
+      ),
+      iconBg: "bg-accent-500/10 border border-accent-500/20",
     },
     {
       title: "Avg Order Value",
       value: stats ? formatCurrency(stats.avgOrderValue) : "—",
       subtitle: "Revenue per transaction",
-      icon: "📈",
-      color: "bg-amber-500/20 text-amber-400",
-      gradient: "bg-gradient-to-br from-amber-600/10 to-transparent",
+      icon: (
+        <svg className="w-3.5 h-3.5 text-secondary-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        </svg>
+      ),
+      iconBg: "bg-secondary-500/10 border border-secondary-500/20",
     },
     {
       title: "Transactions",
       value: stats ? formatNumber(stats.transactionCount) : "—",
       subtitle: "Matching current filters",
-      icon: "🔢",
-      color: "bg-secondary-500/20 text-secondary-400",
-      gradient: "bg-gradient-to-br from-secondary-400/10 to-transparent",
+      icon: (
+        <svg className="w-3.5 h-3.5 text-stone-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+        </svg>
+      ),
+      iconBg: "bg-surface-700/70 border border-surface-600/50",
     },
   ];
 

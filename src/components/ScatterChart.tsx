@@ -4,13 +4,8 @@ import { useDashboardStore } from "../store/dashboardStore";
 import type { ScatterPoint } from "../types";
 
 /**
- * ScatterChart — the "stress test" view.
- *
- * Plots Revenue vs Units Sold for up to 4000 LTTB-downsampled points
- * on a canvas element. A naive SVG/DOM implementation at this scale
- * would produce thousands of DOM nodes and stutter on filter changes.
- *
- * Techniques: Canvas 2D rendering, LTTB downsampling (in worker), DPR-aware
+ * ScatterChart — Canvas 2D visualization of Revenue vs Units Sold
+ * with LTTB-downsampled points and device-pixel-ratio scaling.
  */
 
 function drawScatter(
@@ -41,9 +36,9 @@ function drawScatter(
   const xScale = (v: number) => pad.left + ((v - minX) / (maxX - minX || 1)) * plotW;
   const yScale = (v: number) => pad.top  + plotH - ((v - minY) / (maxY - minY || 1)) * plotH;
 
-  const gridColor = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.07)";
-  const labelColor = isDark ? "#64748b" : "#94a3b8";
-  const dotColor   = isDark ? "rgba(129,140,248,0.5)" : "rgba(99,102,241,0.45)";
+  const gridColor = isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.05)";
+  const labelColor = isDark ? "#71717a" : "#78716c";
+  const dotColor   = isDark ? "rgba(245, 158, 11, 0.45)" : "rgba(217, 119, 6, 0.45)";
 
   ctx.font = "10px Inter, system-ui, sans-serif";
   ctx.fillStyle = labelColor;
@@ -74,7 +69,7 @@ function drawScatter(
   }
 
   // Axis labels
-  ctx.fillStyle = isDark ? "#94a3b8" : "#64748b";
+  ctx.fillStyle = isDark ? "#a1a1aa" : "#57534e";
   ctx.font = "11px Inter, system-ui, sans-serif";
   ctx.textAlign = "center";
   ctx.fillText("Units Sold", pad.left + plotW / 2, h - 4);
@@ -91,8 +86,8 @@ function drawScatter(
   for (const p of data) {
     const px = xScale(p.x);
     const py = yScale(p.y);
-    ctx.moveTo(px + 3, py);
-    ctx.arc(px, py, 3, 0, Math.PI * 2);
+    ctx.moveTo(px + 2.5, py);
+    ctx.arc(px, py, 2.5, 0, Math.PI * 2);
   }
   ctx.fill();
 }
@@ -128,28 +123,28 @@ export const ScatterChart = memo(function ScatterChart() {
   }, [scatterData, isDark]);
 
   return (
-    <div className="chart-container">
+    <div className="chart-container min-w-0">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="font-semibold text-slate-200 text-sm">
+          <h3 className="font-medium text-stone-900 dark:text-stone-200 text-sm">
             Revenue vs Units Sold
           </h3>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
             LTTB-downsampled to{" "}
-            <span className="text-accent-400 font-medium">
+            <span className="text-accent-600 dark:text-accent-400 font-medium">
               {scatterData.length.toLocaleString()}
             </span>{" "}
-            pts · Canvas 2D · Naïve SVG would lag at this scale
+            pts · Canvas 2D render · Zero DOM overhead
           </p>
         </div>
         {isLoading && (
-          <span className="text-xs text-amber-400 animate-pulse">Updating…</span>
+          <span className="text-xs text-accent-600 dark:text-accent-400 font-medium animate-pulse">Updating…</span>
         )}
       </div>
 
       <div ref={containerRef} className="w-full" style={{ height: 280 }}>
         {scatterData.length === 0 && !isLoading ? (
-          <div className="h-full flex items-center justify-center text-slate-500 text-sm">
+          <div className="h-full flex items-center justify-center text-stone-500 text-sm">
             No data matches the current filters
           </div>
         ) : (

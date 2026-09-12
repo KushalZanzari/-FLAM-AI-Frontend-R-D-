@@ -2,13 +2,8 @@ import { memo, useEffect, useRef, useState } from "react";
 import { useLastProcessingMs, useFilteredCount, useIsLoading, useTotalRows } from "../hooks/useFilteredData";
 
 /**
- * PerfIndicator — always-visible HUD showing:
- *  - FPS (rolling 60-frame average via requestAnimationFrame)
- *  - Last filter processing time (from Web Worker)
- *  - Visible row count
- *
- * This is a deliberate feature, not a debug leftover.
- * It proves the optimization claims to anyone reviewing.
+ * PerfIndicator — HUD displaying real-time FPS, worker compute latency,
+ * and active dataset row counts.
  */
 export const PerfIndicator = memo(function PerfIndicator() {
   const [fps, setFps] = useState(60);
@@ -52,7 +47,7 @@ export const PerfIndicator = memo(function PerfIndicator() {
 
   const fpsColorClass = {
     good: "text-emerald-400",
-    warn: "text-amber-400",
+    warn: "text-accent-400",
     bad: "text-rose-400",
   }[fpsColor];
 
@@ -60,39 +55,39 @@ export const PerfIndicator = memo(function PerfIndicator() {
     processingMs < 100
       ? "text-emerald-400"
       : processingMs < 500
-      ? "text-amber-400"
+      ? "text-accent-400"
       : "text-rose-400";
 
   return (
     <div className="perf-hud animate-fade-in">
       {/* FPS */}
       <div className="flex items-center gap-1.5">
-        <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse-slow" style={{ color: fpsColorClass.includes("emerald") ? "#34d399" : fpsColorClass.includes("amber") ? "#fbbf24" : "#fb7185" }} />
-        <span className="text-slate-500">FPS</span>
-        <span className={`font-bold ${fpsColorClass}`}>{fps}</span>
+        <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" style={{ color: fpsColorClass.includes("emerald") ? "#10b981" : fpsColorClass.includes("accent") ? "#f59e0b" : "#f43f5e" }} />
+        <span className="text-stone-400 text-[11px]">FPS</span>
+        <span className={`font-semibold font-mono ${fpsColorClass}`}>{fps}</span>
       </div>
 
-      <span className="text-slate-700">|</span>
+      <span className="text-stone-700">·</span>
 
       {/* Filter processing time */}
       <div className="flex items-center gap-1.5">
-        <span className="text-slate-500">Filter</span>
+        <span className="text-stone-400 text-[11px]">Worker</span>
         {isLoading ? (
-          <span className="text-amber-400 animate-pulse">…</span>
+          <span className="text-accent-400 animate-pulse font-mono font-medium">…</span>
         ) : (
-          <span className={`font-bold ${msColorClass}`}>{processingMs}ms</span>
+          <span className={`font-semibold font-mono ${msColorClass}`}>{processingMs}ms</span>
         )}
       </div>
 
-      <span className="text-slate-700">|</span>
+      <span className="text-stone-700">·</span>
 
       {/* Row count */}
       <div className="flex items-center gap-1.5">
-        <span className="text-slate-500">Rows</span>
-        <span className="text-slate-300 font-medium">
+        <span className="text-stone-400 text-[11px]">Dataset</span>
+        <span className="text-stone-200 font-medium font-mono">
           {filteredCount.toLocaleString()}
           {totalRows > 0 && (
-            <span className="text-slate-600">/{totalRows.toLocaleString()}</span>
+            <span className="text-stone-500">/{totalRows.toLocaleString()}</span>
           )}
         </span>
       </div>

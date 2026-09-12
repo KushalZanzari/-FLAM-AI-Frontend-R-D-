@@ -8,12 +8,12 @@ import type { CategoryPoint } from "../types";
 // using the plugin system for maximum performance.
 
 const CATEGORY_COLORS = [
-  "#818cf8", // indigo
-  "#fb7185", // rose
-  "#34d399", // emerald
-  "#f472b6", // pink
-  "#fbbf24", // amber
-  "#22d3ee", // cyan
+  "#f59e0b", // Warm Amber
+  "#ea580c", // Terracotta
+  "#10b981", // Forest Emerald
+  "#e11d48", // Crimson Rose
+  "#d97706", // Deep Ochre
+  "#84cc16", // Warm Sage
 ];
 
 // ── Custom bar chart renderer using Canvas 2D ─────────────────────────────────
@@ -43,8 +43,9 @@ function BarChartCanvas({ data, isDark, height }: BarChartCanvasProps) {
     ctx.scale(dpr, dpr);
     ctx.clearRect(0, 0, width, height);
 
-    const labelColor   = isDark ? "#94a3b8" : "#64748b";
-    const bgColor      = isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.03)";
+    const labelColor   = isDark ? "#a1a1aa" : "#57534e";
+    const valueColor   = isDark ? "#d4d4d8" : "#292524";
+    const bgColor      = isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)";
     const maxRevenue   = Math.max(...data.map((d) => d.revenue));
 
     const paddingLeft   = 130;
@@ -53,7 +54,7 @@ function BarChartCanvas({ data, isDark, height }: BarChartCanvasProps) {
     const paddingBottom = 10;
     const barAreaWidth  = width - paddingLeft - paddingRight;
     const itemHeight    = (height - paddingTop - paddingBottom) / data.length;
-    const barHeight     = Math.min(itemHeight * 0.55, 32);
+    const barHeight     = Math.min(itemHeight * 0.52, 28);
     const barGap        = itemHeight - barHeight;
 
     ctx.font = "12px Inter, system-ui, sans-serif";
@@ -73,14 +74,14 @@ function BarChartCanvas({ data, isDark, height }: BarChartCanvasProps) {
       // Background track
       ctx.fillStyle = bgColor;
       ctx.beginPath();
-      ctx.roundRect(paddingLeft, y, barAreaWidth, barHeight, 4);
+      ctx.roundRect(paddingLeft, y, barAreaWidth, barHeight, 3);
       ctx.fill();
 
       // Bar
       ctx.fillStyle = color;
-      ctx.globalAlpha = 0.85;
+      ctx.globalAlpha = 0.9;
       ctx.beginPath();
-      ctx.roundRect(paddingLeft, y, barWidth, barHeight, 4);
+      ctx.roundRect(paddingLeft, y, barWidth, barHeight, 3);
       ctx.fill();
       ctx.globalAlpha = 1;
 
@@ -91,7 +92,7 @@ function BarChartCanvas({ data, isDark, height }: BarChartCanvasProps) {
           ? `$${(rev / 1_000_000).toFixed(2)}M`
           : `$${(rev / 1_000).toFixed(1)}K`;
 
-      ctx.fillStyle = labelColor;
+      ctx.fillStyle = valueColor;
       ctx.textAlign = "left";
       ctx.textBaseline = "middle";
       ctx.fillText(revLabel, paddingLeft + barWidth + 8, y + barHeight / 2);
@@ -119,33 +120,33 @@ export const CategoryBarChart = memo(function CategoryBarChart() {
   const chartHeight = Math.max(data.length * 48, 200);
 
   return (
-    <div className="chart-container">
+    <div className="chart-container min-w-0">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="font-semibold text-slate-200 text-sm">
+          <h3 className="font-medium text-stone-900 dark:text-stone-200 text-sm">
             Revenue by {barChartMode === "category" ? "Category" : "Region"}
           </h3>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Canvas-rendered · Sorted by revenue
+          <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
+            Distribution sorted by aggregate revenue
           </p>
         </div>
-        <div className="flex gap-1.5">
+        <div className="flex gap-1 bg-stone-100 dark:bg-surface-800 p-0.5 rounded-lg border border-stone-200 dark:border-surface-700">
           <button
             onClick={() => setBarChartMode("category")}
-            className={`btn-ghost text-xs px-3 py-1 ${
+            className={`px-2.5 py-1 text-xs rounded font-medium transition-all ${
               barChartMode === "category"
-                ? "!bg-accent-600/30 !text-accent-400 !border-accent-500/30"
-                : ""
+                ? "bg-white dark:bg-surface-700 text-stone-900 dark:text-stone-100 shadow-sm border border-stone-200 dark:border-surface-600"
+                : "text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200"
             }`}
           >
             Category
           </button>
           <button
             onClick={() => setBarChartMode("region")}
-            className={`btn-ghost text-xs px-3 py-1 ${
+            className={`px-2.5 py-1 text-xs rounded font-medium transition-all ${
               barChartMode === "region"
-                ? "!bg-accent-600/30 !text-accent-400 !border-accent-500/30"
-                : ""
+                ? "bg-white dark:bg-surface-700 text-stone-900 dark:text-stone-100 shadow-sm border border-stone-200 dark:border-surface-600"
+                : "text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200"
             }`}
           >
             Region
@@ -156,11 +157,11 @@ export const CategoryBarChart = memo(function CategoryBarChart() {
       {isLoading && data.length === 0 ? (
         <div className="space-y-3">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="h-8 rounded-lg bg-white/5 shimmer" />
+            <div key={i} className="h-8 rounded bg-stone-200 dark:bg-surface-800/60 shimmer" />
           ))}
         </div>
       ) : data.length === 0 ? (
-        <div className="h-48 flex items-center justify-center text-slate-500 text-sm">
+        <div className="h-48 flex items-center justify-center text-stone-400 text-sm">
           No data matches the current filters
         </div>
       ) : (

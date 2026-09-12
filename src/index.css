@@ -12,16 +12,21 @@
   }
 
   body {
-    @apply bg-surface-900 text-slate-100 font-sans;
-    background: radial-gradient(ellipse at top left, #111827 0%, #0a0e1a 60%);
+    @apply bg-surface-950 text-stone-100 font-sans;
+    background: #0e0e11;
     min-height: 100vh;
   }
 
   /* Light mode overrides */
-  html.light body {
-    @apply bg-slate-50 text-slate-900;
-    background: radial-gradient(ellipse at top left, #eff6ff 0%, #f8fafc 60%);
+  html.light,
+  html:not(.dark) {
     color-scheme: light;
+  }
+
+  html.light body,
+  html:not(.dark) body {
+    @apply bg-stone-100 text-stone-900;
+    background: #fbfbfa !important;
   }
 
   * {
@@ -34,146 +39,162 @@
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    @apply bg-surface-800;
+    @apply bg-surface-900;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-surface-500 rounded-full;
+    @apply bg-surface-600 rounded-full;
   }
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-accent-600;
   }
 
-  html.light ::-webkit-scrollbar-track {
-    @apply bg-slate-200;
+  html.light ::-webkit-scrollbar-track,
+  html:not(.dark) ::-webkit-scrollbar-track {
+    @apply bg-stone-200;
   }
-  html.light ::-webkit-scrollbar-thumb {
-    @apply bg-slate-400;
+  html.light ::-webkit-scrollbar-thumb,
+  html:not(.dark) ::-webkit-scrollbar-thumb {
+    @apply bg-stone-400;
   }
 }
 
 /* ── Component Utilities ─────────────────────────────────────────────────── */
 @layer components {
-  /* Glass card */
+  /* Card component */
   .card {
-    @apply rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm shadow-card;
+    @apply rounded-xl border border-surface-700/80 bg-surface-900/90 shadow-subtle;
   }
 
-  html.light .card {
-    @apply border-slate-200 bg-white shadow-md backdrop-blur-none;
+  html.light .card,
+  html:not(.dark) .card {
+    @apply border-stone-300/80 bg-white text-stone-900 shadow-sm;
+    background-color: #ffffff;
+    border-color: #e7e5e4;
   }
 
   /* Chart container */
   .chart-container {
-    @apply card p-4;
+    @apply card p-5;
   }
 
   /* Stat card */
   .stat-card {
-    @apply card p-5 flex flex-col gap-2;
+    @apply card p-5 flex flex-col gap-2 relative overflow-hidden transition-all duration-150 hover:border-surface-600;
+  }
+
+  html.light .stat-card,
+  html:not(.dark) .stat-card {
+    @apply hover:border-stone-400;
   }
 
   /* Filter chip / badge */
   .chip {
-    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium
-           bg-accent-600/20 text-accent-400 border border-accent-600/30;
+    @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-xs font-medium
+           bg-surface-800 text-stone-300 border border-surface-700;
+  }
+
+  html.light .chip,
+  html:not(.dark) .chip {
+    @apply bg-stone-100 text-stone-700 border-stone-300;
   }
 
   /* Button variants */
   .btn-primary {
-    @apply px-4 py-2 rounded-lg bg-accent-600 hover:bg-accent-500 text-white
-           font-medium text-sm transition-all duration-200 hover:shadow-glow
+    @apply px-3.5 py-1.5 rounded-lg bg-accent-500 hover:bg-accent-400 text-stone-950
+           font-semibold text-xs transition-all duration-150 shadow-subtle
            active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-ghost {
-    @apply px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300
-           hover:text-white text-sm transition-all duration-200 border border-white/10
+    @apply px-3 py-1.5 rounded-lg bg-surface-800/80 hover:bg-surface-700 text-stone-300
+           hover:text-stone-100 text-xs font-medium transition-all duration-150 border border-surface-700
            active:scale-95;
   }
 
   html.light .btn-ghost {
-    @apply bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border-slate-200;
+    @apply bg-stone-100 hover:bg-stone-200 text-stone-700 hover:text-stone-900 border-stone-200;
   }
 
   /* Section heading */
   .section-title {
-    @apply text-sm font-semibold text-slate-400 uppercase tracking-wider;
+    @apply text-xs font-semibold text-stone-400 uppercase tracking-wider;
   }
 
   html.light .section-title {
-    @apply text-slate-500;
+    @apply text-stone-500;
   }
 
   /* uPlot container */
   .uplot-wrap {
     @apply w-full;
+    width: 100%;
   }
 
-  .uplot-wrap .u-wrap {
-    width: 100% !important;
+  .uplot-wrap .uplot {
+    width: 100%;
   }
 
   /* Loading shimmer */
   .shimmer {
-    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
   }
 
   html.light .shimmer {
-    background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.04) 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.03) 50%, transparent 100%);
     background-size: 200% 100%;
   }
 
   /* Table row */
   .table-row-hover {
-    @apply transition-colors duration-100 hover:bg-white/5 cursor-default;
+    @apply transition-colors duration-100 hover:bg-surface-800/60 cursor-default;
   }
 
   html.light .table-row-hover {
-    @apply hover:bg-slate-50;
+    @apply hover:bg-stone-50;
   }
 
   /* Perf indicator */
   .perf-hud {
     @apply fixed bottom-4 right-4 z-50 flex items-center gap-3
-           px-4 py-2.5 rounded-xl
-           bg-surface-800/90 backdrop-blur-md border border-white/10
+           px-3.5 py-2 rounded-lg
+           bg-surface-900/95 border border-surface-700
            text-xs font-mono shadow-card;
   }
 
   html.light .perf-hud {
-    @apply bg-white/90 border-slate-200 text-slate-700 shadow-lg;
+    @apply bg-white/95 border-stone-200 text-stone-700 shadow-card;
   }
 
   /* Checkbox custom */
   input[type="checkbox"] {
-    @apply accent-accent-500 w-4 h-4 rounded cursor-pointer;
+    @apply accent-accent-500 w-3.5 h-3.5 rounded cursor-pointer;
   }
 
   /* Date input */
   input[type="date"] {
-    @apply bg-surface-700 border border-white/10 rounded-lg px-3 py-2 text-sm
-           text-slate-200 w-full focus:outline-none focus:border-accent-500
+    @apply bg-surface-800 border border-surface-700 rounded-lg px-2.5 py-1.5 text-xs
+           text-stone-200 w-full focus:outline-none focus:border-accent-500
            focus:ring-1 focus:ring-accent-500/30 transition-all;
     color-scheme: dark;
   }
 
   html.light input[type="date"] {
-    @apply bg-white border-slate-300 text-slate-800;
+    @apply bg-white border-stone-200 text-stone-800;
     color-scheme: light;
   }
 
   /* Text input */
   input[type="text"] {
-    @apply bg-surface-700 border border-white/10 rounded-lg px-3 py-2.5 text-sm
-           text-slate-200 w-full focus:outline-none focus:border-accent-500
+    @apply bg-surface-800 border border-surface-700 rounded-lg px-3 py-2 text-xs
+           text-stone-200 w-full focus:outline-none focus:border-accent-500
            focus:ring-1 focus:ring-accent-500/30 transition-all
-           placeholder:text-slate-500;
+           placeholder:text-stone-500;
   }
 
   html.light input[type="text"] {
-    @apply bg-white border-slate-300 text-slate-800 placeholder:text-slate-400;
+    @apply bg-white border-stone-200 text-stone-800 placeholder:text-stone-400;
   }
 }
 
@@ -181,17 +202,17 @@
 .u-legend {
   font-family: "Inter", system-ui, sans-serif !important;
   font-size: 11px !important;
-  color: #94a3b8 !important;
+  color: #a1a1aa !important;
   padding: 4px 0 !important;
 }
 
 .u-legend th {
-  color: #94a3b8 !important;
+  color: #a1a1aa !important;
 }
 
 html.light .u-legend,
 html.light .u-legend th {
-  color: #475569 !important;
+  color: #71717a !important;
 }
 
 /* ── Custom Animations ───────────────────────────────────────────────────── */
@@ -201,10 +222,10 @@ html.light .u-legend th {
 }
 
 @keyframes countUp {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0; transform: translateY(2px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 .count-animate {
-  animation: countUp 0.4s ease-out;
+  animation: countUp 0.3s ease-out;
 }

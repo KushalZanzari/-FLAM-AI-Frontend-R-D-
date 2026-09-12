@@ -121,7 +121,13 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
   toggleTheme: () =>
     set((s) => {
       const next = s.theme === "dark" ? "light" : "dark";
-      document.documentElement.classList.toggle("dark", next === "dark");
+      if (next === "dark") {
+        document.documentElement.classList.add("dark");
+        document.documentElement.classList.remove("light");
+      } else {
+        document.documentElement.classList.remove("dark");
+        document.documentElement.classList.add("light");
+      }
       return { theme: next };
     }),
 

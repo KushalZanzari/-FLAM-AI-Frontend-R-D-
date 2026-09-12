@@ -37,11 +37,11 @@ const CheckGroup = memo(function CheckGroup({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <span className="section-title text-xs">{title}</span>
+        <span className="section-title text-[11px]">{title}</span>
         {selected.length > 0 && (
           <button
             onClick={toggleAll}
-            className="text-xs text-accent-400 hover:text-accent-300 transition-colors"
+            className="text-xs text-accent-600 dark:text-accent-400 hover:text-accent-700 dark:hover:text-accent-300 transition-colors font-medium"
           >
             Clear
           </button>
@@ -67,7 +67,7 @@ const CheckGroup = memo(function CheckGroup({
                   style={{ backgroundColor: colorDots[opt] }}
                 />
               )}
-              <span className="text-sm text-slate-300 group-hover:text-white transition-colors leading-tight">
+              <span className="text-sm text-stone-700 dark:text-stone-300 group-hover:text-stone-950 dark:group-hover:text-stone-100 transition-colors leading-tight">
                 {opt}
               </span>
             </label>
@@ -80,12 +80,12 @@ const CheckGroup = memo(function CheckGroup({
 
 // ── Category color dots ───────────────────────────────────────────────────────
 const CATEGORY_COLORS: Record<string, string> = {
-  Electronics: "#818cf8",
-  Apparel: "#fb7185",
-  "Home & Garden": "#34d399",
-  Beauty: "#f472b6",
-  Sports: "#fbbf24",
-  "Food & Grocery": "#22d3ee",
+  Electronics: "#f59e0b", // Warm Amber
+  Apparel: "#ea580c", // Terracotta
+  "Home & Garden": "#10b981", // Forest Emerald
+  Beauty: "#e11d48", // Crimson Rose
+  Sports: "#d97706", // Deep Ochre
+  "Food & Grocery": "#84cc16", // Warm Sage
 };
 
 // ── Main FilterPanel ──────────────────────────────────────────────────────────
@@ -137,9 +137,9 @@ export const FilterPanel = memo(function FilterPanel() {
   return (
     <aside className="card p-5 space-y-6 h-fit sticky top-4">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between pb-1">
         <div className="flex items-center gap-2">
-          <h2 className="font-semibold text-slate-200 text-sm">Filters</h2>
+          <h2 className="font-semibold text-stone-900 dark:text-stone-200 text-sm">Filters</h2>
           {activeFilterCount > 0 && (
             <span className="chip">
               {activeFilterCount} active
@@ -149,7 +149,7 @@ export const FilterPanel = memo(function FilterPanel() {
         {activeFilterCount > 0 && (
           <button
             onClick={handleReset}
-            className="text-xs text-slate-500 hover:text-rose-400 transition-colors"
+            className="text-xs text-stone-500 hover:text-rose-600 dark:hover:text-rose-400 transition-colors font-medium"
           >
             Reset all
           </button>
@@ -157,10 +157,10 @@ export const FilterPanel = memo(function FilterPanel() {
       </div>
 
       {/* Search */}
-      <div className="space-y-2">
-        <span className="section-title text-xs">Product Search</span>
+      <div className="space-y-1.5">
+        <span className="section-title text-[11px]">Search Product</span>
         <div className="relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">
+          <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-stone-500 text-xs">
             🔍
           </span>
           <input
@@ -168,18 +168,18 @@ export const FilterPanel = memo(function FilterPanel() {
             value={searchValue}
             onChange={(e) => handleSearch(e.target.value)}
             placeholder="e.g. Laptop Pro 15"
-            className="pl-8"
+            className="pl-7"
           />
         </div>
-        <p className="text-xs text-slate-600">Debounced {DEBOUNCE_MS}ms</p>
+        <p className="text-[10px] text-stone-500">Debounced {DEBOUNCE_MS}ms worker query</p>
       </div>
 
       {/* Date Range */}
-      <div className="space-y-2">
-        <span className="section-title text-xs">Date Range</span>
+      <div className="space-y-1.5">
+        <span className="section-title text-[11px]">Date Range</span>
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <label className="text-xs text-slate-500 mb-1 block">From</label>
+            <label className="text-[11px] text-stone-500 mb-1 block">From</label>
             <input
               type="date"
               value={filters.dateFrom}
@@ -189,7 +189,7 @@ export const FilterPanel = memo(function FilterPanel() {
             />
           </div>
           <div>
-            <label className="text-xs text-slate-500 mb-1 block">To</label>
+            <label className="text-[11px] text-stone-500 mb-1 block">To</label>
             <input
               type="date"
               value={filters.dateTo}
@@ -202,7 +202,7 @@ export const FilterPanel = memo(function FilterPanel() {
       </div>
 
       {/* Divider */}
-      <div className="border-t border-white/5" />
+      <div className="border-t border-surface-700/80" />
 
       {/* Regions */}
       <CheckGroup

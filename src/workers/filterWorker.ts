@@ -279,7 +279,7 @@ function processFilters(filters: FilterState): WorkerOutMessage {
   const scatterData: ScatterPoint[] = scatterDownsampled.map((p) => ({
     x: p.x,
     y: p.y,
-    category: "mixed", // category info lost after downsampling — acceptable
+    category: "mixed",
   }));
 
   const processingMs = Math.round((performance.now() - t0) * 10) / 10;

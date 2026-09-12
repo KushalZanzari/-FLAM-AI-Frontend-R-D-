@@ -66,18 +66,18 @@ export const LiveDataTicker = memo(function LiveDataTicker() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           {liveDataEnabled && (
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           )}
-          <h3 className="font-semibold text-slate-200 text-sm">
-            Live Data Feed
+          <h3 className="font-medium text-stone-900 dark:text-stone-200 text-sm">
+            Live Stream
           </h3>
-          <span className="chip text-xs">Bonus feature</span>
+          <span className="chip text-[10px]">Real-time Feed</span>
         </div>
         <button
           onClick={toggleLiveData}
-          className={liveDataEnabled ? "btn-ghost text-xs !text-rose-400 !border-rose-500/30" : "btn-primary text-xs"}
+          className={liveDataEnabled ? "btn-ghost text-xs !text-rose-600 dark:!text-rose-400 !border-rose-500/30" : "btn-primary text-xs"}
         >
-          {liveDataEnabled ? "⏹ Stop" : "▶ Start"}
+          {liveDataEnabled ? "⏹ Pause Stream" : "▶ Start Stream"}
         </button>
       </div>
 
@@ -87,12 +87,12 @@ export const LiveDataTicker = memo(function LiveDataTicker() {
             <div
               key={row.id}
               className={`flex items-center justify-between text-xs py-1.5 px-3 rounded-lg transition-all
-                ${i === 0 ? "bg-emerald-500/10 border border-emerald-500/20" : "bg-white/3"}`}
+                ${i === 0 ? "bg-emerald-500/10 border border-emerald-500/20" : "bg-stone-50 dark:bg-surface-800/60 border border-stone-200 dark:border-surface-700/50"}`}
             >
-              <span className="text-slate-400 font-mono">#{row.id}</span>
-              <span className="text-slate-300">{row.product_name}</span>
-              <span className="text-slate-400">{row.region}</span>
-              <span className="text-emerald-400 font-semibold font-mono">
+              <span className="text-stone-400 dark:text-stone-500 font-mono">#{row.id}</span>
+              <span className="text-stone-800 dark:text-stone-200 font-medium">{row.product_name}</span>
+              <span className="text-stone-500 dark:text-stone-400">{row.region}</span>
+              <span className="text-emerald-600 dark:text-emerald-400 font-medium font-mono">
                 ${row.revenue.toFixed(2)}
               </span>
             </div>
@@ -101,9 +101,9 @@ export const LiveDataTicker = memo(function LiveDataTicker() {
       )}
 
       {!liveDataEnabled && (
-        <p className="text-xs text-slate-600">
-          Simulates new transactions arriving every 1.5s via setInterval.
-          Updates summary cards and table without re-running the full filter.
+        <p className="text-xs text-stone-500 dark:text-stone-400">
+          Simulates live transactional event streaming at 1.5s intervals.
+          State aggregates update without requiring a blocking worker refilter.
         </p>
       )}
     </div>
